@@ -1,6 +1,5 @@
 import RFC_5234
 import RFC_7405
-import Test_Primitives
 import Testing
 
 @Suite("RFC 7405 Case Sensitivity Tests")
