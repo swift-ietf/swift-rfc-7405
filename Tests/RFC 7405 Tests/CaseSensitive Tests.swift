@@ -7,8 +7,11 @@
 import RFC_7405
 import Testing
 
-@Suite("RFC_7405 - Case-Sensitive Strings (%s\"...\")")
-struct CaseSensitiveStringTests {
+extension RFC_7405 {
+    @Suite
+    struct Test {
+        @Suite
+        struct `Case-Sensitive Strings` {
     @Test
     func `Case-sensitive string matches exact case`() throws {
         let rule = RFC_5234.Rule(
@@ -65,10 +68,10 @@ struct CaseSensitiveStringTests {
             try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)  // "HTTP" ✗
         }
     }
-}
+        }
 
-@Suite("RFC_7405 - Case-Insensitive Strings (%i\"...\" and \"...\")")
-struct CaseInsensitiveStringTests {
+        @Suite
+        struct `Case-Insensitive Strings` {
     @Test
     func `Explicit case-insensitive (%i) matches all cases`() throws {
         let rule = RFC_5234.Rule(
@@ -120,10 +123,10 @@ struct CaseInsensitiveStringTests {
             try RFC_5234.Validator.validate(testCase, against: defaultRule)
         }
     }
-}
+        }
 
-@Suite("RFC_7405 - Mixed Case Sensitivity")
-struct MixedCaseSensitivityTests {
+        @Suite
+        struct `Mixed Case Sensitivity` {
     @Test
     func `Sequence with both case-sensitive and case-insensitive`() throws {
         // %s"GET" SP %i"http"
@@ -182,10 +185,10 @@ struct MixedCaseSensitivityTests {
             try RFC_5234.Validator.validate([0x70, 0x6F, 0x73, 0x74], against: rule)
         }
     }
-}
+        }
 
-@Suite("RFC_7405 - Backward Compatibility")
-struct BackwardCompatibilityTests {
+        @Suite
+        struct `Backward Compatibility` {
     @Test
     func `RFC 5234 rules still work`() throws {
         // All RFC 5234 core rules should still work
@@ -207,5 +210,7 @@ struct BackwardCompatibilityTests {
         try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)  // "HTTP"
         try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)  // "http"
         try RFC_5234.Validator.validate([0x48, 0x74, 0x74, 0x70], against: rule)  // "Http"
+    }
+        }
     }
 }

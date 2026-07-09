@@ -2,8 +2,9 @@ import RFC_5234
 import RFC_7405
 import Testing
 
-@Suite("RFC 7405 Case Sensitivity Tests")
-struct CaseSensitivityTests {
+extension RFC_7405.Test {
+    @Suite
+    struct `Case Sensitivity` {
     @Test
     func `Case-insensitive matching using RFC 5234 syntax`() throws {
         let rule = RFC_5234.Rule(
@@ -114,5 +115,6 @@ struct CaseSensitivityTests {
         try RFC_5234.Validator.validate(Array("hello".utf8), against: caseInsensitiveRule)
         try RFC_5234.Validator.validate(Array("HELLO".utf8), against: caseInsensitiveRule)
         try RFC_5234.Validator.validate(Array("Hello".utf8), against: caseInsensitiveRule)
+    }
     }
 }
