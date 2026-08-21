@@ -1,8 +1,3 @@
-// CaseSensitive Tests.swift
-// swift-rfc-7405
-//
-// Tests for RFC 7405 case-sensitive strings
-
 @_spi(RFC_7405) import RFC_5234
 import RFC_7405
 import Testing
@@ -19,7 +14,7 @@ extension RFC_7405 {
                     element: .terminal(.caseSensitiveString("aBc"))
                 )
 
-                try RFC_5234.Validator.validate([0x61, 0x42, 0x63], against: rule)  // "aBc" ✓
+                try RFC_5234.Validator.validate([0x61, 0x42, 0x63], against: rule)
             }
 
             @Test
@@ -29,15 +24,14 @@ extension RFC_7405 {
                     element: .terminal(.caseSensitiveString("aBc"))
                 )
 
-                // These should all fail
                 #expect(throws: RFC_5234.Validator.Error.self) {
-                    try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)  // "abc"
+                    try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)
                 }
                 #expect(throws: RFC_5234.Validator.Error.self) {
-                    try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)  // "ABC"
+                    try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)
                 }
                 #expect(throws: RFC_5234.Validator.Error.self) {
-                    try RFC_5234.Validator.validate([0x41, 0x42, 0x63], against: rule)  // "ABc"
+                    try RFC_5234.Validator.validate([0x41, 0x42, 0x63], against: rule)
                 }
             }
 
@@ -48,11 +42,10 @@ extension RFC_7405 {
                     element: .terminal(.caseSensitiveString("HTTP"))
                 )
 
-                // "HTTP" ✓
                 try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
 
                 #expect(throws: RFC_5234.Validator.Error.self) {
-                    // "http" ✗
+
                     try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
                 }
             }
@@ -64,11 +57,10 @@ extension RFC_7405 {
                     element: .terminal(.caseSensitiveString("http"))
                 )
 
-                // "http" ✓
                 try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
 
                 #expect(throws: RFC_5234.Validator.Error.self) {
-                    // "HTTP" ✗
+
                     try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
                 }
             }
@@ -83,25 +75,23 @@ extension RFC_7405 {
                     element: .terminal(.caseInsensitiveString("abc"))
                 )
 
-                // All case variations should match
-                try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)  // "abc"
-                try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)  // "ABC"
-                try RFC_5234.Validator.validate([0x41, 0x62, 0x43], against: rule)  // "AbC"
-                try RFC_5234.Validator.validate([0x61, 0x42, 0x63], against: rule)  // "aBc"
+                try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)
+                try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)
+                try RFC_5234.Validator.validate([0x41, 0x62, 0x43], against: rule)
+                try RFC_5234.Validator.validate([0x61, 0x42, 0x63], against: rule)
             }
 
             @Test
             func `Default RFC 5234 string() matches all cases`() throws {
-                // RFC 5234 default behavior: case-insensitive
+
                 let rule = RFC_5234.Rule(
                     name: "test",
                     element: .terminal(.string("abc"))
                 )
 
-                // All case variations should match
-                try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)  // "abc"
-                try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)  // "ABC"
-                try RFC_5234.Validator.validate([0x41, 0x62, 0x43], against: rule)  // "AbC"
+                try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)
+                try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)
+                try RFC_5234.Validator.validate([0x41, 0x62, 0x43], against: rule)
             }
 
             @Test
@@ -117,9 +107,9 @@ extension RFC_7405 {
                 )
 
                 let testCases: [[UInt8]] = [
-                    [0x74, 0x65, 0x73, 0x74],  // "test"
-                    [0x54, 0x45, 0x53, 0x54],  // "TEST"
-                    [0x54, 0x65, 0x73, 0x74],  // "Test"
+                    [0x74, 0x65, 0x73, 0x74],
+                    [0x54, 0x45, 0x53, 0x54],
+                    [0x54, 0x65, 0x73, 0x74],
                 ]
 
                 for testCase in testCases {
@@ -133,29 +123,26 @@ extension RFC_7405 {
         struct `Mixed Case Sensitivity` {
             @Test
             func `Sequence with both case-sensitive and case-insensitive`() throws {
-                // %s"GET" SP %i"http"
+
                 let rule = RFC_5234.Rule(
                     name: "test",
                     element: .sequence([
-                        .terminal(.caseSensitiveString("GET")),  // Must be exactly "GET"
-                        .terminal(.byte(0x20)),  // Space
-                        .terminal(.caseInsensitiveString("http")),  // Can be any case
+                        .terminal(.caseSensitiveString("GET")),
+                        .terminal(.byte(0x20)),
+                        .terminal(.caseInsensitiveString("http")),
                     ])
                 )
 
-                // "GET http" ✓
                 try RFC_5234.Validator.validate(
                     [0x47, 0x45, 0x54, 0x20, 0x68, 0x74, 0x74, 0x70],
                     against: rule
                 )
 
-                // "GET HTTP" ✓ (http part is case-insensitive)
                 try RFC_5234.Validator.validate(
                     [0x47, 0x45, 0x54, 0x20, 0x48, 0x54, 0x54, 0x50],
                     against: rule
                 )
 
-                // "get HTTP" ✗ (GET part is case-sensitive)
                 #expect(throws: RFC_5234.Validator.Error.self) {
                     try RFC_5234.Validator.validate(
                         [0x67, 0x65, 0x74, 0x20, 0x48, 0x54, 0x54, 0x50],
@@ -166,25 +153,21 @@ extension RFC_7405 {
 
             @Test
             func `Alternation with different case sensitivity`() throws {
-                // %s"POST" / %i"get"
+
                 let rule = RFC_5234.Rule(
                     name: "test",
                     element: .alternation([
-                        .terminal(.caseSensitiveString("POST")),  // Exact "POST"
-                        .terminal(.caseInsensitiveString("get")),  // Any case "get"
+                        .terminal(.caseSensitiveString("POST")),
+                        .terminal(.caseInsensitiveString("get")),
                     ])
                 )
 
-                // "POST" ✓
                 try RFC_5234.Validator.validate([0x50, 0x4F, 0x53, 0x54], against: rule)
 
-                // "get" ✓
                 try RFC_5234.Validator.validate([0x67, 0x65, 0x74], against: rule)
 
-                // "GET" ✓ (get is case-insensitive)
                 try RFC_5234.Validator.validate([0x47, 0x45, 0x54], against: rule)
 
-                // "post" ✗ (POST is case-sensitive)
                 #expect(throws: RFC_5234.Validator.Error.self) {
                     try RFC_5234.Validator.validate([0x70, 0x6F, 0x73, 0x74], against: rule)
                 }
@@ -195,25 +178,23 @@ extension RFC_7405 {
         struct `Backward Compatibility` {
             @Test
             func `RFC 5234 rules still work`() throws {
-                // All RFC 5234 core rules should still work
-                try RFC_5234.Validator.validate([0x35], against: RFC_5234.CoreRules.digit)  // "5"
-                try RFC_5234.Validator.validate([0x41], against: RFC_5234.CoreRules.alpha)  // "A"
-                try RFC_5234.Validator.validate([0x46], against: RFC_5234.CoreRules.hexdig)  // "F"
+
+                try RFC_5234.Validator.validate([0x35], against: RFC_5234.CoreRules.digit)
+                try RFC_5234.Validator.validate([0x41], against: RFC_5234.CoreRules.alpha)
+                try RFC_5234.Validator.validate([0x46], against: RFC_5234.CoreRules.hexdig)
             }
 
             @Test
             func `Default string behavior unchanged`() throws {
-                // RFC 5234 default string behavior: case-insensitive
-                // This should not change with RFC 7405
+
                 let rule = RFC_5234.Rule(
                     name: "protocol",
                     element: .terminal(.string("HTTP"))
                 )
 
-                // All cases should still match (backward compatible)
-                try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)  // "HTTP"
-                try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)  // "http"
-                try RFC_5234.Validator.validate([0x48, 0x74, 0x74, 0x70], against: rule)  // "Http"
+                try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
+                try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
+                try RFC_5234.Validator.validate([0x48, 0x74, 0x74, 0x70], against: rule)
             }
         }
     }

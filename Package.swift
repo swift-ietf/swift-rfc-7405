@@ -2,15 +2,6 @@
 
 import PackageDescription
 
-// RFC 7405: Case-Sensitive String Support in ABNF
-//
-// Extends RFC 5234 ABNF to add case-sensitive string literal support.
-// RFC 7405 adds the %s"..." syntax for case-sensitive matching while
-// retaining the default case-insensitive %i"..." syntax from RFC 5234.
-//
-// This is a pure Swift implementation with no Foundation dependencies,
-// suitable for Swift Embedded and constrained environments.
-
 let package = Package(
     name: "swift-rfc-7405",
     platforms: [
