@@ -18,11 +18,11 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            url: "https://github.com/swift-molecules/swift-standard-library-extensions.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ascii.git",
             branch: "main"
         ),
         .package(url: "https://github.com/swift-ietf/swift-rfc-5234.git", branch: "main"),
@@ -36,7 +36,7 @@ let package = Package(
                     name: "Standard Library Extensions",
                     package: "swift-standard-library-extensions"
                 ),
-                .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
+                .product(name: "ASCII", package: "swift-ascii"),
             ]
         ),
         .testTarget(
