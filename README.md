@@ -1,35 +1,10 @@
 # swift-rfc-7405
 
-![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+Use this package when an ABNF grammar built with swift-rfc-5234 needs string literals that match only in the exact case written, the %s form of RFC 7405. Start from `RFC_5234.Terminal.caseSensitiveString(_:)` for that, and from `RFC_5234.Terminal.caseInsensitiveString(_:)` for the explicit %i form. The case-sensitive form is declared in swift-rfc-5234 under the `RFC_7405` SPI, so it is only visible with an SPI import of `RFC_5234`. If every literal in your grammar is case-insensitive, swift-rfc-5234 alone is enough.
 
-The case-sensitive string-literal extension to ABNF of RFC 7405.
+## Laws
 
-## Standard Reference
-
-- **RFC**: 7405
-- **Title**: Case-Sensitive String Support in ABNF
-
-## Installation
-
-Add the package to your `Package.swift` dependencies:
-
-```swift
-dependencies: [
-    .package(url: "https://github.com/swift-ietf/swift-rfc-7405.git", from: "0.1.4")
-]
-```
-
-Add the product to a target that needs it:
-
-```swift
-.target(
-    name: "YourTarget",
-    dependencies: [
-        .product(name: "RFC 7405", package: "swift-rfc-7405")
-    ]
-)
-```
-
-## License
-
-Apache 2.0. See [LICENSE.md](LICENSE.md).
+- `RFC_5234.Terminal.caseInsensitiveString(_:)` builds the same terminal as `RFC_5234.Terminal.string(_:)`. A plain quoted string stays case-insensitive, as in RFC 5234.
+- A case-sensitive string matches only the exact UTF-8 bytes of the literal. "aBc" refuses "abc", "ABC" and "ABc".
+- A case-insensitive string compares ASCII letters without regard to case, so "HTTP" matches "http", "Http" and "HtTp".
+- Case-sensitive and case-insensitive literals mix freely in one sequence or alternation, and each keeps its own case rule.
