@@ -2,7 +2,7 @@ import RFC_5234
 import RFC_7405
 import Testing
 
-extension RFC_7405.Test {
+extension `RFC_7405 Tests`.Test {
     @Suite
     struct `Case Sensitivity` {
         @Test

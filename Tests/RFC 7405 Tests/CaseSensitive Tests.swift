@@ -2,7 +2,9 @@
 import RFC_7405
 import Testing
 
-extension RFC_7405 {
+enum `RFC_7405 Tests` {}
+
+extension `RFC_7405 Tests` {
     @Suite
     struct Test {
         @Suite
