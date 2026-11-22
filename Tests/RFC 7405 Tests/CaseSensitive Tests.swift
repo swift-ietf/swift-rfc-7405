@@ -2,72 +2,72 @@
 import RFC_7405
 import Testing
 
-enum `RFC_7405 Tests` {}
+enum `IETF.RFC.7405 Tests` {}
 
-extension `RFC_7405 Tests` {
+extension `IETF.RFC.7405 Tests` {
     @Suite
     struct Test {
     }
 }
 
-extension `RFC_7405 Tests`.Test {
+extension `IETF.RFC.7405 Tests`.Test {
     @Suite
     struct `Case-Sensitive Strings` {
         @Test
         func `Case-sensitive string matches exact case`() throws {
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .terminal(.caseSensitiveString("aBc"))
             )
 
-            try RFC_5234.Validator.validate([0x61, 0x42, 0x63], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x61, 0x42, 0x63], against: rule)
         }
 
         @Test
         func `Case-sensitive string rejects different case`() {
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .terminal(.caseSensitiveString("aBc"))
             )
 
-            #expect(throws: RFC_5234.Validator.Error.self) {
-                try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)
+            #expect(throws: IETF.RFC.`5234`.Validator.Error.self) {
+                try IETF.RFC.`5234`.Validator.validate([0x61, 0x62, 0x63], against: rule)
             }
-            #expect(throws: RFC_5234.Validator.Error.self) {
-                try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)
+            #expect(throws: IETF.RFC.`5234`.Validator.Error.self) {
+                try IETF.RFC.`5234`.Validator.validate([0x41, 0x42, 0x43], against: rule)
             }
-            #expect(throws: RFC_5234.Validator.Error.self) {
-                try RFC_5234.Validator.validate([0x41, 0x42, 0x63], against: rule)
+            #expect(throws: IETF.RFC.`5234`.Validator.Error.self) {
+                try IETF.RFC.`5234`.Validator.validate([0x41, 0x42, 0x63], against: rule)
             }
         }
 
         @Test
         func `Case-sensitive uppercase`() throws {
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .terminal(.caseSensitiveString("HTTP"))
             )
 
-            try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
 
-            #expect(throws: RFC_5234.Validator.Error.self) {
+            #expect(throws: IETF.RFC.`5234`.Validator.Error.self) {
 
-                try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
+                try IETF.RFC.`5234`.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
             }
         }
 
         @Test
         func `Case-sensitive lowercase`() throws {
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .terminal(.caseSensitiveString("http"))
             )
 
-            try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
 
-            #expect(throws: RFC_5234.Validator.Error.self) {
+            #expect(throws: IETF.RFC.`5234`.Validator.Error.self) {
 
-                try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
+                try IETF.RFC.`5234`.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
             }
         }
     }
@@ -76,38 +76,38 @@ extension `RFC_7405 Tests`.Test {
     struct `Case-Insensitive Strings` {
         @Test
         func `Explicit case-insensitive (%i) matches all cases`() throws {
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .terminal(.caseInsensitiveString("abc"))
             )
 
-            try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)
-            try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)
-            try RFC_5234.Validator.validate([0x41, 0x62, 0x43], against: rule)
-            try RFC_5234.Validator.validate([0x61, 0x42, 0x63], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x61, 0x62, 0x63], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x41, 0x42, 0x43], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x41, 0x62, 0x43], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x61, 0x42, 0x63], against: rule)
         }
 
         @Test
         func `Default RFC 5234 string() matches all cases`() throws {
 
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .terminal(.string("abc"))
             )
 
-            try RFC_5234.Validator.validate([0x61, 0x62, 0x63], against: rule)
-            try RFC_5234.Validator.validate([0x41, 0x42, 0x43], against: rule)
-            try RFC_5234.Validator.validate([0x41, 0x62, 0x43], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x61, 0x62, 0x63], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x41, 0x42, 0x43], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x41, 0x62, 0x43], against: rule)
         }
 
         @Test
         func `Explicit %i equals default "..."`() throws {
-            let explicitRule = RFC_5234.Rule(
+            let explicitRule = IETF.RFC.`5234`.Rule(
                 name: "explicit",
                 element: .terminal(.caseInsensitiveString("test"))
             )
 
-            let defaultRule = RFC_5234.Rule(
+            let defaultRule = IETF.RFC.`5234`.Rule(
                 name: "default",
                 element: .terminal(.string("test"))
             )
@@ -119,8 +119,8 @@ extension `RFC_7405 Tests`.Test {
             ]
 
             for testCase in testCases {
-                try RFC_5234.Validator.validate(testCase, against: explicitRule)
-                try RFC_5234.Validator.validate(testCase, against: defaultRule)
+                try IETF.RFC.`5234`.Validator.validate(testCase, against: explicitRule)
+                try IETF.RFC.`5234`.Validator.validate(testCase, against: defaultRule)
             }
         }
     }
@@ -130,7 +130,7 @@ extension `RFC_7405 Tests`.Test {
         @Test
         func `Sequence with both case-sensitive and case-insensitive`() throws {
 
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .sequence([
                     .terminal(.caseSensitiveString("GET")),
@@ -139,18 +139,18 @@ extension `RFC_7405 Tests`.Test {
                 ])
             )
 
-            try RFC_5234.Validator.validate(
+            try IETF.RFC.`5234`.Validator.validate(
                 [0x47, 0x45, 0x54, 0x20, 0x68, 0x74, 0x74, 0x70],
                 against: rule
             )
 
-            try RFC_5234.Validator.validate(
+            try IETF.RFC.`5234`.Validator.validate(
                 [0x47, 0x45, 0x54, 0x20, 0x48, 0x54, 0x54, 0x50],
                 against: rule
             )
 
-            #expect(throws: RFC_5234.Validator.Error.self) {
-                try RFC_5234.Validator.validate(
+            #expect(throws: IETF.RFC.`5234`.Validator.Error.self) {
+                try IETF.RFC.`5234`.Validator.validate(
                     [0x67, 0x65, 0x74, 0x20, 0x48, 0x54, 0x54, 0x50],
                     against: rule
                 )
@@ -160,7 +160,7 @@ extension `RFC_7405 Tests`.Test {
         @Test
         func `Alternation with different case sensitivity`() throws {
 
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "test",
                 element: .alternation([
                     .terminal(.caseSensitiveString("POST")),
@@ -168,14 +168,14 @@ extension `RFC_7405 Tests`.Test {
                 ])
             )
 
-            try RFC_5234.Validator.validate([0x50, 0x4F, 0x53, 0x54], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x50, 0x4F, 0x53, 0x54], against: rule)
 
-            try RFC_5234.Validator.validate([0x67, 0x65, 0x74], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x67, 0x65, 0x74], against: rule)
 
-            try RFC_5234.Validator.validate([0x47, 0x45, 0x54], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x47, 0x45, 0x54], against: rule)
 
-            #expect(throws: RFC_5234.Validator.Error.self) {
-                try RFC_5234.Validator.validate([0x70, 0x6F, 0x73, 0x74], against: rule)
+            #expect(throws: IETF.RFC.`5234`.Validator.Error.self) {
+                try IETF.RFC.`5234`.Validator.validate([0x70, 0x6F, 0x73, 0x74], against: rule)
             }
         }
     }
@@ -185,22 +185,22 @@ extension `RFC_7405 Tests`.Test {
         @Test
         func `RFC 5234 rules still work`() throws {
 
-            try RFC_5234.Validator.validate([0x35], against: RFC_5234.CoreRules.digit)
-            try RFC_5234.Validator.validate([0x41], against: RFC_5234.CoreRules.alpha)
-            try RFC_5234.Validator.validate([0x46], against: RFC_5234.CoreRules.hexdig)
+            try IETF.RFC.`5234`.Validator.validate([0x35], against: IETF.RFC.`5234`.CoreRules.digit)
+            try IETF.RFC.`5234`.Validator.validate([0x41], against: IETF.RFC.`5234`.CoreRules.alpha)
+            try IETF.RFC.`5234`.Validator.validate([0x46], against: IETF.RFC.`5234`.CoreRules.hexdig)
         }
 
         @Test
         func `Default string behavior unchanged`() throws {
 
-            let rule = RFC_5234.Rule(
+            let rule = IETF.RFC.`5234`.Rule(
                 name: "protocol",
                 element: .terminal(.string("HTTP"))
             )
 
-            try RFC_5234.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
-            try RFC_5234.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
-            try RFC_5234.Validator.validate([0x48, 0x74, 0x74, 0x70], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x48, 0x54, 0x54, 0x50], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x68, 0x74, 0x74, 0x70], against: rule)
+            try IETF.RFC.`5234`.Validator.validate([0x48, 0x74, 0x74, 0x70], against: rule)
         }
     }
 }

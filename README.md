@@ -4,7 +4,7 @@ Use this package when an ABNF grammar built with swift-rfc-5234 needs string lit
 
 ## Laws
 
-- `RFC_5234.Terminal.caseInsensitiveString(_:)` builds the same terminal as `RFC_5234.Terminal.string(_:)`. A plain quoted string stays case-insensitive, as in RFC 5234.
+- `IETF.RFC.`5234`.Terminal.caseInsensitiveString(_:)` builds the same terminal as `IETF.RFC.`5234`.Terminal.string(_:)`. A plain quoted string stays case-insensitive, as in RFC 5234.
 - A case-sensitive string matches only the exact UTF-8 bytes of the literal. "aBc" refuses "abc", "ABC" and "ABc".
 - A case-insensitive string compares ASCII letters without regard to case, so "HTTP" matches "http", "Http" and "HtTp".
 - Case-sensitive and case-insensitive literals mix freely in one sequence or alternation, and each keeps its own case rule.
